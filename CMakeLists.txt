@@ -13,3 +13,5 @@ add_executable(tester tests/test.cpp)
 target_link_libraries(tester GTest::GTest GTest::Main)
 
 target_include_directories(tester PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
+add_test(NAME tester COMMAND tester)
