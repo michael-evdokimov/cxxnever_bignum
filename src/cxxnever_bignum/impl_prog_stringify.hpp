@@ -78,7 +78,6 @@ struct prog_stringify
 		std::vector<type_t> tmp;
 		std::vector<type_t> remainder;
 		std::string r;
-		std::string t;
 
 		base_num.push_back(base);
 
@@ -91,13 +90,15 @@ struct prog_stringify
 			num = std::move(tmp);
 			int digit = remainder.size() ? remainder[0] : 0;
 			if (0 <= digit && digit <= 9)
-				t += '0' + digit;
+				r += '0' + digit;
 			else
-				t += 'a' + digit - 10;
+				r += 'a' + digit - 10;
 		}
 
-		for (auto it = t.rbegin(), end = t.rend(); it != end; ++it)
-			r += *it;
+		ssize_t i = (r.size() && r[0] == '-') ? 1 : 0;
+		ssize_t j = r.size() - 1;
+		while (i < j)
+			std::swap(r[i++], r[j--]);
 
 		if (r.empty())
 			r = "0";
