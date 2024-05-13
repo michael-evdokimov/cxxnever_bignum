@@ -93,7 +93,7 @@ struct prog_stringify
 			if (0 <= digit && digit <= 9)
 				t += '0' + digit;
 			else
-				t += 'a' + digit;
+				t += 'a' + digit - 10;
 		}
 
 		for (auto it = t.rbegin(), end = t.rend(); it != end; ++it)

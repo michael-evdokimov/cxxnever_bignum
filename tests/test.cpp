@@ -355,6 +355,14 @@ TEST(test, test_str_base_10)
 	}
 }
 
+TEST(test, test_str_base_36)
+{
+	EXPECT_EQ("a", int_t(10).str(36));
+	EXPECT_EQ("z", int_t(35).str(36));
+	EXPECT_EQ("10", int_t(36).str(36));
+	EXPECT_EQ("11", int_t(37).str(36));
+}
+
 TEST(test, test_convert_from_string)
 {
 	EXPECT_EQ(int_t(0).hex(), (int_t() = "0").hex());
