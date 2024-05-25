@@ -27,6 +27,16 @@ struct prog_division
 			num[i8] &= ~flag;
 	}
 
+	size_t highest_bit_index(const std::vector<type_t>& num)
+	{
+		type_t n = num.back();
+		size_t i = sizeof(type_t) * 8 - 1;
+		while ((n & (type_t(1) << i)) == 0)
+			i--;
+
+		return i += (num.size() - 1) * sizeof(type_t) * 8;
+	}
+
 	void divmod_(std::vector<type_t>& r, std::vector<type_t>* remainder,
 	             const std::vector<type_t>& a, const std::vector<type_t>& b)
 	{
@@ -42,7 +52,7 @@ struct prog_division
 		}
 
 		std::vector<type_t> t;
-		ssize_t i = 0;
+		ssize_t i = highest_bit_index(a) - highest_bit_index(b);
 
 		while (true) {
 			set_bit_number(r, i, true);
