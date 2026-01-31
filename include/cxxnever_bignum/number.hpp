@@ -319,6 +319,8 @@ struct number
         return *this;
     }
 
+    void divmod(number&, number&, const number&) = delete;
+
     number& divide(const number& a, const number& b,
                    number* remainder = nullptr)
     {
