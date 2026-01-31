@@ -1,0 +1,9 @@
+Source: libcxxneverbignum
+Section: libs
+Priority: optional
+Maintainer: Michael Evdokimiov <michael.evdokimov@gmail.com>
+Build-Depends: dpkg-dev, debhelper-compat (=13), g++, cmake, googletest
+
+Package: libcxxneverbignum-dev
+Architecture: any
+Description: Big number header-only c++ library
