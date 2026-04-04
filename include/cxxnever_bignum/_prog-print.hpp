@@ -17,6 +17,9 @@ struct prog_print
 {
     typedef typename std::make_unsigned<type_t>::type u_type_t;
 
+    prog_divide_small<type_t, bigger_t> p_div = {};
+    prog_negate<type_t, bigger_t> p_neg = {};
+
     std::string str_2_sign(const std::vector<type_t>& num, int sign)
     {
         std::string r = {};
@@ -70,8 +73,7 @@ struct prog_print
     {
         if (num.size() && num.back() < 0) {
             auto copy = num;
-            prog_negate<type_t, bigger_t> p = {};
-            p.negate(copy);
+            p_neg.negate(copy);
             return str_2_sign(copy, -1);
         }
         return str_2_sign(num, 0);
@@ -81,8 +83,7 @@ struct prog_print
     {
         if (num.size() && num.back() < 0) {
             auto copy = num;
-            prog_negate<type_t, bigger_t> p = {};
-            p.negate(copy);
+            p_neg.negate(copy);
             return str_16_sign(copy, -1);
         }
         return str_16_sign(num, 0);
@@ -94,8 +95,7 @@ struct prog_print
         std::vector<type_t> num = number, result;
 
         if (num.size() && num.back() < 0) {
-            prog_negate<type_t, bigger_t> p = {};
-            p.negate(num);
+            p_neg.negate(num);
             r += "-";
         }
 
@@ -104,10 +104,9 @@ struct prog_print
         for (u_type_t i = u_type_t(-1) >> 1; i / base; i /= base)
             ten *= base, base_count++;
 
-        prog_divide_small<type_t, bigger_t> p = {};
         while (num.size()) {
             type_t digits = 0;
-            p.divide(&result, num, ten, &digits);
+            p_div.divide(&result, num, ten, &digits);
             for (int i = 0; i != base_count; i++, digits /= base) {
                 char buf[2] = {};
                 std::to_chars(buf, buf + sizeof(buf), digits % base, base);
