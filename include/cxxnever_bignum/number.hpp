@@ -9,6 +9,7 @@
 #include "_prog-negate.hpp"
 #include "_prog-multiply.hpp"
 #include "_prog-divide.hpp"
+#include "_prog-divide-small.hpp"
 #include "_prog-compare.hpp"
 #include "_prog-shift.hpp"
 #include "_prog-print.hpp"
@@ -326,6 +327,13 @@ struct number
     {
         prog_divide<type_t, bigger_t> p = {};
         p.divide(&num, a.num, b.num, remainder ? &remainder->num : nullptr);
+        return *this;
+    }
+
+    number& divide_small(const number& a, type_t b, type_t* remainder = nullptr)
+    {
+        prog_divide_small<type_t, bigger_t> p = {};
+        p.divide(&num, a.num, b, remainder);
         return *this;
     }
 

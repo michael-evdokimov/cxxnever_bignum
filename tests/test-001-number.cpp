@@ -429,3 +429,28 @@ TEST(test_bignum, compat_with_ver1)
     EXPECT_EQ(true, x.assign("ffff", 16));
     EXPECT_EQ("ffff", x.str(16));
 }
+
+TEST(test_bignum, divide_small)
+{
+    int16_t mm = -1;
+    num_t(-1).divide_small(32768, 2, &mm);
+
+    for (long long a: numbers()) {
+        for (long long b: numbers()) {
+            char text[0x100] = {};
+            snprintf(text, sizeof(text), "a=%lld; b=%lld;", a, b);
+
+            if (b == 0)
+                continue;
+
+            int16_t m = -1;
+            int16_t c = b;
+            if (c != b)
+                continue;
+
+            EXPECT_EQ(num_t(a / c).hex(),
+                      num_t(-1).divide_small(num_t(a), c, &m).hex()) << text;
+            EXPECT_EQ(a % c, m);
+        }
+    }
+}
