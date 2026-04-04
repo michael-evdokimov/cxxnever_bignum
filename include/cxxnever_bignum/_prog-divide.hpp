@@ -16,6 +16,12 @@ struct prog_divide
 {
     typedef std::vector<type_t> number;
 
+    prog_compare<type_t, bigger_t> p_cmp = {};
+    prog_addition<type_t, bigger_t> p_add = {};
+    prog_subtract<type_t, bigger_t> p_sub = {};
+    prog_shift<type_t, bigger_t> p_shift = {};
+    prog_negate<type_t, bigger_t> p_neg = {};
+
     std::vector<type_t> sum = {};
     std::vector<type_t> item = {};
 
@@ -48,11 +54,6 @@ struct prog_divide
     void
     __div(number* result, const number& a, const number& b, number* remainder)
     {
-        prog_compare<type_t, bigger_t> p_cmp = {};
-        prog_addition<type_t, bigger_t> p_add = {};
-        prog_subtract<type_t, bigger_t> p_sub = {};
-        prog_shift<type_t, bigger_t> p_shift = {};
-
         size_t a_len = length(a);
         size_t b_len = length(b);
 
@@ -100,8 +101,6 @@ struct prog_divide
     void
     divide(number* result, const number& a, const number& b, number* remainder)
     {
-        prog_negate<type_t, bigger_t> p_neg = {};
-
         type_t a_sign = (a.size() && a.back() < 0) ? -1 : 0;
         type_t b_sign = (b.size() && b.back() < 0) ? -1 : 0;
 
