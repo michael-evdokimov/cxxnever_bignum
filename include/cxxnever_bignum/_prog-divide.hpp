@@ -14,6 +14,8 @@ namespace cxxnever::details
 template<typename type_t, typename bigger_t>
 struct prog_divide
 {
+    typedef std::vector<type_t> number;
+
     std::vector<type_t> sum = {};
     std::vector<type_t> item = {};
 
@@ -43,10 +45,8 @@ struct prog_divide
         return r;
     }
 
-    void __divide(std::vector<type_t>* result,
-                  const std::vector<type_t>& a,
-                  const std::vector<type_t>& b,
-                  std::vector<type_t>* remainder)
+    void
+    __div(number* result, const number& a, const number& b, number* remainder)
     {
         prog_compare<type_t, bigger_t> p_cmp = {};
         prog_addition<type_t, bigger_t> p_add = {};
@@ -97,10 +97,8 @@ struct prog_divide
         }
     }
 
-    void divide(std::vector<type_t>* result,
-                const std::vector<type_t>& a,
-                const std::vector<type_t>& b,
-                std::vector<type_t>* remainder = nullptr)
+    void
+    divide(number* result, const number& a, const number& b, number* remainder)
     {
         prog_negate<type_t, bigger_t> p_neg = {};
 
@@ -111,12 +109,12 @@ struct prog_divide
             throw std::runtime_error("division by zero");
 
         if (a_sign == 0 && b_sign == 0)
-            return __divide(result, a, b, remainder);
+            return __div(result, a, b, remainder);
 
         if (a_sign == 0 && b_sign == -1) {
             auto b_copy = b;
             p_neg.negate(b_copy);
-            __divide(result, a, b_copy, remainder);
+            __div(result, a, b_copy, remainder);
             if (result)
                 p_neg.negate(*result);
             return;
@@ -125,7 +123,7 @@ struct prog_divide
         if (a_sign == -1 && b_sign == 0) {
             auto a_copy = a;
             p_neg.negate(a_copy);
-            __divide(result, a_copy, b, remainder);
+            __div(result, a_copy, b, remainder);
             if (result)
                 p_neg.negate(*result);
             if (remainder)
@@ -138,7 +136,7 @@ struct prog_divide
             auto b_copy = b;
             p_neg.negate(a_copy);
             p_neg.negate(b_copy);
-            __divide(result, a_copy, b_copy, remainder);
+            __div(result, a_copy, b_copy, remainder);
             if (remainder)
                 p_neg.negate(*remainder);
             return;

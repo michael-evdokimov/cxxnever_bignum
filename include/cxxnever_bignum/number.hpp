@@ -135,7 +135,7 @@ struct number
     {
         number r = {};
         prog_divide<type_t, bigger_t> p = {};
-        p.divide(&r.num, a.num, b.num);
+        p.divide(&r.num, a.num, b.num, nullptr);
         return r;
     }
 
@@ -305,7 +305,7 @@ struct number
     {
         std::vector<type_t> result = {};
         prog_divide<type_t, bigger_t> p = {};
-        p.divide(&result, num, b.num);
+        p.divide(&result, num, b.num, nullptr);
         num = std::move(result);
         return *this;
     }
