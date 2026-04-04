@@ -5,7 +5,7 @@
 #include <string>
 #include <charconv>
 #include <cstdint>
-#include "_prog-divide.hpp"
+#include "_prog-divide-small.hpp"
 #include "_prog-negate.hpp"
 
 
@@ -91,7 +91,7 @@ struct prog_print
     std::string str_n(const std::vector<type_t>& number, int base)
     {
         std::string r = {};
-        std::vector<type_t> num = number, result, remainder;
+        std::vector<type_t> num = number, result;
 
         if (num.size() && num.back() < 0) {
             prog_negate<type_t, bigger_t> p = {};
@@ -104,11 +104,10 @@ struct prog_print
         for (u_type_t i = u_type_t(-1) >> 1; i / base; i /= base)
             ten *= base, base_count++;
 
-        std::vector<type_t> ten_num = {ten};
-        prog_divide<type_t, bigger_t> p = {};
+        prog_divide_small<type_t, bigger_t> p = {};
         while (num.size()) {
-            p.divide(&result, num, ten_num, &remainder);
-            type_t digits = remainder.size() ? remainder[0] : 0;
+            type_t digits = 0;
+            p.divide(&result, num, ten, &digits);
             for (int i = 0; i != base_count; i++, digits /= base) {
                 char buf[2] = {};
                 std::to_chars(buf, buf + sizeof(buf), digits % base, base);
