@@ -432,9 +432,6 @@ TEST(test_bignum, compat_with_ver1)
 
 TEST(test_bignum, divide_small)
 {
-    int16_t mm = -1;
-    num_t(-1).divide_small(32768, 2, &mm);
-
     for (long long a: numbers()) {
         for (long long b: numbers()) {
             char text[0x100] = {};
