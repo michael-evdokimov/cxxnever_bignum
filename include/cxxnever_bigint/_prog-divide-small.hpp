@@ -17,21 +17,16 @@ struct bigint_prog_divide_small
     void __div(type_t* result, const type_t* a, type_t b, s_type_t* remainder)
     {
         bigger_t carry = 0;
-        size_t r_idx = Count;
 
         for (size_t i = Count; i--; ) {
             carry <<= 8 * sizeof(type_t);
             carry += a[i];
 
             if (result)
-                result[--r_idx] = carry / b;
+                result[i] = carry / b;
 
             carry %= b;
         }
-
-        if (result)
-            for (size_t i = 0; i != Count; i++)
-                result[i] = (r_idx != Count) ? result[r_idx++] : 0;
 
         if (remainder)
             *remainder = carry;
