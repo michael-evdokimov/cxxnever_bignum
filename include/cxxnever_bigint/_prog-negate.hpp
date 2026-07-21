@@ -10,12 +10,10 @@ struct bigint_prog_negate
 {
     void negate(type_t* num)
     {
-        for (size_t i = 0; i != Count; i++)
-            num[i] = ~num[i];
+        type_t one = 1;
 
         for (size_t i = 0; i != Count; i++)
-            if (++num[i])
-                return;
+            one &= !(num[i] = ~num[i] + one);
     }
 };
 
